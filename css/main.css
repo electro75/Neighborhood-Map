@@ -1,3 +1,16 @@
+*{
+	font-family: 'Bree Serif', serif;
+}
+.container{
+	display:flex;
+}
+.side-panel{
+	width: 25%;
+	/*background:#816969;*/
+	border-radius:3px;
+	/*color:#fff;*/
+}
 #map{
 	height: 600px;
+	width:75%;
 }
