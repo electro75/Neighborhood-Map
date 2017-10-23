@@ -6,18 +6,17 @@
 	display:flex;
 }
 .side-panel{
-	width: 25%;
-	/*background:#816969;*/
-	border:1px solid #A99B9B;
-	border-radius:3px;
-	/*color:#fff;*/
+	width: 20%;
+	border: 1px solid #A99B9B;
+	border-radius: 3px;
+	transition: 0.5s;
 }
 .content{
-	width:75%;
+	transition: width .5s;
+	width:80%;
 }
 #map{
 	height: 600px;
-	/*width:75%;*/
 }
 h2{
 	padding:10px;
@@ -28,6 +27,7 @@ h2{
 i{
 	margin-top:15px;
 	padding-left:45px;
+	cursor: pointer;
 }
 .upper-panel{
 	height:76px;
@@ -36,6 +36,3 @@ i{
 	border-radius:3px;
 	/*width:75%;*/
 }
-/*.fa-bars{
-	font-size: xx-large;
-}*/
