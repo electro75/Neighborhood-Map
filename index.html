@@ -3,15 +3,28 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Neighborhood Map</title>
-
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+	<link rel="stylesheet" href="css/main.css">
+
+	<script src="https://use.fontawesome.com/56117adbba.js"></script>
+
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="side-panel">
-			<h2>Locations</h2>
+			<div class="title">
+				<h2>My Map</h2>
+			</div>
 			<hr>
+			<div class="display-title container">
+				<div class="list-name col-sm-8">
+					<h3>Locations</h3>
+				</div>
+				<div class="col-sm-4">
+					<i class="fa fa-filter" aria-hidden="true"></i>
+				</div>
+			</div>
 			<ul data-bind="foreach: places">
 				<li data-bind="text: $data"></li>
 			</ul>

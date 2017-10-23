@@ -1,7 +1,8 @@
 *{
 	font-family: 'Bree Serif', serif;
 }
-.container{
+.container-fluid{
+	width:100%;
 	display:flex;
 }
 .side-panel{
@@ -16,5 +17,12 @@
 	width:75%;
 }
 h2{
-	margin:5px;
+	padding:10px;
+}
+.display-title{
+	display: flex;
+}
+i{
+	margin-top:15px;
+	padding-left:45px;
 }
