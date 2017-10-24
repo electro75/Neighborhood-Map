@@ -21,21 +21,30 @@
 				<div class="list-name col-sm-8">
 					<h3>Locations</h3>
 				</div>
-				<div class="col-sm-4">
-					<i class="fa fa-filter" aria-hidden="true"></i>
+				<div class="col-4">
+					<div class="dropdown">
+  						<i class="fa fa-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-bind="foreach: categs">
+    						<p class="dropdown-item" data-bind="text: $data" ></p>
+  						</div>
+					</div>
 				</div>
 			</div>
 			<ul data-bind="foreach: places">
-				<li data-bind="text: $data"></li>
+				<li data-bind="text: $data, click: $root.getDetails"></li>
 			</ul>
 		</div>
 		<div class="content" id="content">
 			<div class="upper-panel">
-				<h2 class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></h2>
+				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
 			</div>
 			<div id="map"></div>
 		</div>
 	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="bower_components/knockout/dist/knockout.js"></script>
 	<script src="app/app.js"></script>
 	<script src="app/toggle.js"></script>

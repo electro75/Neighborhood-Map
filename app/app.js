@@ -2,13 +2,13 @@ var locations=[
 {
 	name: 'Home',
 	position: {lat: 19.226557, lng: 72.971355},
-	title: 'firstMarker',
-	place_id:'ChIJBzhvR1655zsR1eL9rGQzpvM'
+	place_id:'ChIJBzhvR1655zsR1eL9rGQzpvM',
+  category:'Home'
 },{
 	name: 'Whatta Waffle',
 	position: {lat: 19.258517, lng: 72.984844},
-	title: 'secondMarker',
-	place_id:'ChIJa4Rn-4y75zsRkq_i-j2XfGg'
+	place_id:'ChIJa4Rn-4y75zsRkq_i-j2XfGg',
+  category:'Restaurant'
 }];
 
 var markers=[];
@@ -24,7 +24,7 @@ function initMap(){
         var marker= new google.maps.Marker({
             map: map,
             position: locations[i].position,
-            title: locations[i].title,
+            title: locations[i].name,
             animation: google.maps.Animation.DROP,
             id:locations[i].place_id
         });
@@ -81,11 +81,26 @@ function initMap(){
 function mapViewModel(){
 	// initMap();
 	var self=this;
+
 	this.places=ko.observableArray();
 	locations.forEach(function(obj){
 		self.places.push(obj.name);
 	});
-	console.log(this.places()[0]);
+	this.categs=ko.observableArray();
+  locations.forEach(function(obj){
+    self.categs.push(obj.category);
+  });
+  self.getDetails=function(name){
+    var m;
+    for(var i=0;i<markers.length;i++){
+      if(name==markers[i].title){
+        m=markers[i];
+        break;
+      }
+    }
+    getPlacesDetails(m, detailsInfoWindow);
+    return;
+  }
 }
 
 ko.applyBindings(new mapViewModel())
