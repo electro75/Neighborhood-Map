@@ -3,17 +3,19 @@ var locations=[
 	name: 'Home',
 	position: {lat: 19.226557, lng: 72.971355},
 	place_id:'ChIJBzhvR1655zsR1eL9rGQzpvM',
-  category:'Home'
+  category:['Home','All']
 },{
 	name: 'Whatta Waffle',
 	position: {lat: 19.258517, lng: 72.984844},
 	place_id:'ChIJa4Rn-4y75zsRkq_i-j2XfGg',
-  category:'Restaurant'
+  category:['Restaurant','All']
 }];
 
 var markers=[];
 var map;
 var detailsInfoWindow;
+var categories=['Home','Restaurant','All'];
+
 function initMap(){
 	map=new google.maps.Map(document.getElementById('map'),{
 		center:{lat: 19.2183, lng: 72.9781},
@@ -35,6 +37,7 @@ function initMap(){
     }
     return;
 };
+
     function getPlacesDetails(marker,infowindow) {
       var service = new google.maps.places.PlacesService(map);
       // console.log(marker.id);
@@ -78,8 +81,22 @@ function initMap(){
         }
       });
     }
+
+  function setList(name){
+    var i,j;
+    var updatedList=[]
+    for (j=0;j<locations.length;j++){
+      for(i=0;i<locations[j].category.length;i++){
+        if(name==locations[j].category[i]){
+          updatedList.push(locations[j].name);
+        }
+      }
+    }
+    return updatedList;
+  }
+
 function mapViewModel(){
-	// initMap();
+	
 	var self=this;
 
 	this.places=ko.observableArray();
@@ -87,9 +104,10 @@ function mapViewModel(){
 		self.places.push(obj.name);
 	});
 	this.categs=ko.observableArray();
-  locations.forEach(function(obj){
-    self.categs.push(obj.category);
+  categories.forEach(function(c){
+    self.categs.push(c);
   });
+
   self.getDetails=function(name){
     var m;
     for(var i=0;i<markers.length;i++){
@@ -100,6 +118,14 @@ function mapViewModel(){
     }
     getPlacesDetails(m, detailsInfoWindow);
     return;
+  }
+
+  self.updateList=function(categoryName){
+    self.places.removeAll();
+    var newList= setList(categoryName);
+    for(var i=0; i<newList.length;i++){
+      self.places.push(newList[i]);
+    }
   }
 }
 

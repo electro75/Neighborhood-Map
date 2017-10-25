@@ -18,14 +18,14 @@
 			</div>
 			<hr>
 			<div class="display-title container">
-				<div class="list-name col-sm-8">
+				<div class="list-name col-sm-10">
 					<h3>Locations</h3>
 				</div>
-				<div class="col-4">
+				<div class="col-2">
 					<div class="dropdown">
-  						<i class="fa fa-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  						<i class="fa fa-filter dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" data-bind="foreach: categs">
-    						<p class="dropdown-item" data-bind="text: $data" ></p>
+    						<p class="dropdown-item" style="cursor: pointer" data-bind="text: $data, click: $root.updateList" ></p>
   						</div>
 					</div>
 				</div>
@@ -36,7 +36,7 @@
 		</div>
 		<div class="content" id="content">
 			<div class="upper-panel">
-				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
+				<!-- <i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i> -->
 			</div>
 			<div id="map"></div>
 		</div>
