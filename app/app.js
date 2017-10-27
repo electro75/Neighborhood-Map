@@ -15,30 +15,41 @@ var markers=[];
 var map;
 var detailsInfoWindow;
 var categories=['Home','Restaurants','All'];
+var selectedMarkers=[];
+var selectedIcon, defaultIcon;
 
 function initMap(){
 	map=new google.maps.Map(document.getElementById('map'),{
 		center:{lat: 19.2183, lng: 72.9781},
 		zoom: 12
 		});
+  selectedIcon= makeMarkerIcon('FFFF24');
+  defaultIcon= makeMarkerIcon('0091FF');
+
 	detailsInfoWindow= new google.maps.InfoWindow();
 	for(var i=0;i<locations.length;i++){
-        var marker= new google.maps.Marker({
-            map: map,
-            position: locations[i].position,
-            title: locations[i].name,
-            animation: google.maps.Animation.DROP,
-            id:locations[i].place_id
-        });
-        markers.push(marker);
-        markers[i].addListener('click',function(){
-        	getPlacesDetails(this, detailsInfoWindow);
-        })
+        markers.push(makeMarker(i));
     }
     return;
 };
 
-    function getPlacesDetails(marker,infowindow) {
+  function makeMarker(i){
+    var marker= new google.maps.Marker({
+      map: map,
+      position: locations[i].position,
+      title: locations[i].name,
+      animation: google.maps.Animation.DROP,
+      id:locations[i].place_id,
+      icon: defaultIcon,
+      });
+    marker.addListener('click',function(){
+      getPlacesDetails(this, detailsInfoWindow);
+      changeMarkerColor(this);
+    })
+    return marker;
+  }
+
+  function getPlacesDetails(marker,infowindow) {
       var service = new google.maps.places.PlacesService(map);
       // console.log(marker.id);
       service.getDetails({
@@ -77,6 +88,7 @@ function initMap(){
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;
+            marker.setIcon(defaultIcon);
           });
         }
       });
@@ -103,55 +115,71 @@ function initMap(){
     for(i=0;i<list.length;i++){
       for(var j=0; j<locations.length;j++){
         if(list[i]==locations[j].name){
-          var marker = new google.maps.Marker({
-            map: map,
-            position: locations[j].position,
-            title: locations[j].name,
-            animation: google.maps.Animation.DROP,
-            id:locations[j].place_id
-          });
-          markers.push(marker);
+          markers.push(makeMarker(j));
         }
       }
     }
     return;
   }
 
-function mapViewModel(){
-	
-	var self=this;
-  this.currentList=ko.observable(categories[2]);
+  function makeMarkerIcon(markerColor){
+        var markerImage = new google.maps.MarkerImage(
+          'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+          '|40|_|%E2%80%A2',
+          new google.maps.Size(21, 34),
+          new google.maps.Point(0, 0),
+          new google.maps.Point(10, 34),
+          new google.maps.Size(21,34));
+        return markerImage;    
+  }
 
-	this.places=ko.observableArray();
-	locations.forEach(function(obj){
-		self.places.push(obj.name);
-	});
-	this.categs=ko.observableArray();
-  categories.forEach(function(c){
-    self.categs.push(c);
-  });
-
-  self.getDetails=function(name){
-    var m;
-    for(var i=0;i<markers.length;i++){
-      if(name==markers[i].title){
-        m=markers[i];
-        break;
-      }
+  function changeMarkerColor(marker){
+    if(selectedMarkers.length>0){
+      selectedMarkers[0].setIcon(defaultIcon);
+      selectedMarkers=[];
     }
-    getPlacesDetails(m, detailsInfoWindow);
+    marker.setIcon(selectedIcon);
+    selectedMarkers.push(marker);
     return;
   }
 
-  self.updateList=function(categoryName){
-    self.places.removeAll();
-    var newList= setList(categoryName);
-    for(var i=0; i<newList.length;i++){
-      self.places.push(newList[i]);
+  function mapViewModel(){
+	
+	  var self=this;
+    this.currentListName=ko.observable(categories[2]);
+
+	  this.places=ko.observableArray();
+	  locations.forEach(function(obj){
+	   	self.places.push(obj.name);
+	  });
+	  this.categs=ko.observableArray();
+    categories.forEach(function(c){
+      self.categs.push(c);
+    });
+
+    self.getDetails=function(name){
+      var m= new google.maps.Marker({});
+      for(var i=0;i<markers.length;i++){
+        if(name==markers[i].title){
+          m=markers[i];
+          break;
+        }
+      }
+      getPlacesDetails(m, detailsInfoWindow);
+      changeMarkerColor(m);
+      return;
     }
-    self.currentList(categoryName);
-    updateMarkers(newList);
+
+    self.updateList=function(categoryName){
+      self.places.removeAll();
+      var newList= setList(categoryName);
+      for(var i=0; i<newList.length;i++){
+        self.places.push(newList[i]);
+      }
+      self.currentListName(categoryName);
+      updateMarkers(newList);
+      selectedMarkers=[];
+    }
   }
-}
 
 ko.applyBindings(new mapViewModel())
