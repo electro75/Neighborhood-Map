@@ -37,7 +37,30 @@
 		</div>
 		<div class="content" id="content">
 			<div class="upper-panel">
-				<!-- <i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i> -->
+				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Get Current Weather</button>
+
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+
+				    <!-- Modal content-->
+				    <div class="modal-content">
+				    	<div class="modal-header">
+				      		<h4 class="modal-title">Current Weather</h4>
+				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+				    	</div>
+				    	<div class="modal-body">
+				        	
+				        </div>
+				        <div class="modal-footer">
+				        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      	</div>
+				    </div>
+
+				  </div>
+				</div>
 			</div>
 			<div id="map"></div>
 		</div>
@@ -49,6 +72,7 @@
 	<script src="bower_components/knockout/dist/knockout.js"></script>
 	<script src="app/app.js"></script>
 	<script src="app/toggle.js"></script>
+	<script src="app/weather.js"></script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCG8QC0L6_wgk7G1EEnFwwiJy26TYY2cRU&v=3&callback=initMap"
 	></script>

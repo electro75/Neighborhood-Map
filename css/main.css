@@ -53,3 +53,7 @@ i{
 .side-panel-content{
 	padding-top: 15px;
 }
+.weather-button{
+	float: right;
+	margin: 10px 40px 10px 10px;
+}
