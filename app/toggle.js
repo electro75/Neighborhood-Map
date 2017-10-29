@@ -5,7 +5,7 @@ function openNav(){
     	document.getElementById("content").style.width= "100%";
     	open=false;
     }else{
-    	document.getElementById("sideNav").style.width = "20%";
+    	document.getElementById("sideNav").style.width = "350px";
     	document.getElementById("content").style.width = "80%";
     	open=true
 	}
