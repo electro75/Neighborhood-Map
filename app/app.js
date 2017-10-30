@@ -18,6 +18,7 @@ var categories=['Home','Restaurants','All'];
 var selectedMarkers=[];
 var selectedIcon, defaultIcon;
 
+
 function initMap(){
 	map=new google.maps.Map(document.getElementById('map'),{
 		center:{lat: 19.2183, lng: 72.9781},
@@ -178,7 +179,8 @@ function initMap(){
       }
       self.currentListName(categoryName);
       updateMarkers(newList);
-      selectedMarkers=[];
+      detailsInfoWindow.close();
+      selectedMarkers[0].setIcon(defaultIcon);
     }
   }
 
