@@ -109,13 +109,13 @@ function initMap(){
 
   function updateMarkers(list){
     var i,j;
-    for(i=0;i<markers.length;i++){
-      markers[i].setMap(null);
-    }
-    for(i=0;i<list.length;i++){
-      for(var j=0; j<locations.length;j++){
-        if(list[i]==locations[j].name){
-          markers.push(makeMarker(j));
+    for(var i=0; i<locations.length;i++){
+      for(var j=0; j<list.length; j++){
+        if(locations[i].name!=list[j]){
+          markers[i].setVisible(false);
+        }else{
+          markers[i].setVisible(true);
+          break;
         }
       }
     }
@@ -123,14 +123,14 @@ function initMap(){
   }
 
   function makeMarkerIcon(markerColor){
-        var markerImage = new google.maps.MarkerImage(
-          'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
-          '|40|_|%E2%80%A2',
-          new google.maps.Size(21, 34),
-          new google.maps.Point(0, 0),
-          new google.maps.Point(10, 34),
-          new google.maps.Size(21,34));
-        return markerImage;    
+    var markerImage = new google.maps.MarkerImage(
+      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+      '|40|_|%E2%80%A2',
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(10, 34),
+      new google.maps.Size(21,34));
+    return markerImage;    
   }
 
   function changeMarkerColor(marker){
