@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Neighborhood Map</title>
+
+	<!-- links -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
 	<link rel="stylesheet" href="css/main.css">
@@ -37,12 +39,15 @@
 		</div>
 		<div class="content" id="content">
 			<div class="upper-panel">
-				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
-				<!-- Trigger the modal with a button -->
-				<button type="button" id="wthr-btn" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Get Current Weather</button>
 
-				<!-- Modal -->
-				<div id="myModal" class="modal fade" role="dialog">
+				<!-- hamburger icon which serves as button to toggle the list-view -->
+				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
+
+				<!-- Trigger the weather modal with a button -->
+				<button type="button" id="wthr-btn" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#weatherModal">Get Current Weather</button>
+
+				<!-- weather Modal -->
+				<div id="weatherModal" class="modal fade" role="dialog">
 				  <div class="modal-dialog">
 
 				    <!-- Modal content-->
@@ -55,6 +60,7 @@
 				        	
 				        </div>
 				        <div class="modal-footer">
+				        <p>Data obtained from <a href="https://openweathermap.org/">Open Weather Maps</a></p>
 				        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				      	</div>
 				    </div>
@@ -66,6 +72,7 @@
 		</div>
 	</div>
 
+	<!-- scripts -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
