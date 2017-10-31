@@ -1,6 +1,6 @@
 # Neighborhood-Map
 
-## Introdunction
+## Introduction
 
 This project was developed as the part of Udacity's Front-End Nanodegree. It is basically a map depicting the neighborhood that I live in and highlights some of my favourite spots.
 
