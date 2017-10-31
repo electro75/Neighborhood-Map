@@ -69,8 +69,13 @@ function initMap(){
         markers.push(makeMarker(i));
     }
     return;
-};
+}
 
+//handles google map error and gives a message to the user.
+function googleMapsError(){
+  document.getElementById('map').setContent('<h3>Unable to load Map. Please Try again later</h3>');
+  return;
+}
 //A function that initilises properties of the marker of the given location.
 function makeMarker(i){
   var marker= new google.maps.Marker({
@@ -84,7 +89,7 @@ function makeMarker(i){
   marker.addListener('click',function(){
     getPlacesDetails(this, detailsInfoWindow);
     changeMarkerColor(this);
-  })
+  });
   return marker;
 }
 
@@ -155,8 +160,8 @@ function setList(name){
 function updateMarkers(list){
   var i,j;
   var bounds = new google.maps.LatLngBounds();
-  for(var i=0; i<locations.length;i++){
-    for(var j=0; j<list.length; j++){
+  for(i=0; i<locations.length;i++){
+    for(j=0; j<list.length; j++){
       if(locations[i].name!=list[j]){
         markers[i].setVisible(false);
       }else{
@@ -217,8 +222,8 @@ function mapViewModel(){
       if(name==markers[i].title){
         m=markers[i];
         break;
-      };
-    };
+      }
+    }
     changeMarkerColor(m);
     map.setCenter(m.position);
     detailsInfoWindow.close();
@@ -236,7 +241,7 @@ function mapViewModel(){
     updateMarkers(newList);
     detailsInfoWindow.close();
     selectedMarkers[0].setIcon(defaultIcon);
-  }
+  };
 }
 
 ko.applyBindings(new mapViewModel());

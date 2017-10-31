@@ -42,8 +42,7 @@ $(function(){
 		$('.modal-body').append("<p>Weather: "+weather_descr+"<img src=\""+img_url+"\" alt="+"weather icon"+"/></p>");
 		$('.modal-body').append("<p>Humidity: "+humidity+"%</p>");
 		$('.modal-body').append("<p>Cloudiness: "+clouds+"%</p>");
-		console.log(place);
-		
+	
 	}).catch(function(error){	//Error handling in case of an error.
 		$('.modal-body').append("<h4>Unable to fetch data, please try again later.</h4>");
 		console.log(error);
