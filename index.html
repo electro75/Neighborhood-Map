@@ -31,7 +31,7 @@
 					</div>
 				</div>
 				<ul data-bind="foreach: places">
-					<li data-bind="text: $data, click: $root.getDetails"></li>
+					<li data-bind="text: $data, click: $root.selectMarker"></li>
 				</ul>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 			<div class="upper-panel">
 				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
 				<!-- Trigger the modal with a button -->
-				<button type="button" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Get Current Weather</button>
+				<button type="button" id="wthr-btn" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Get Current Weather</button>
 
 				<!-- Modal -->
 				<div id="myModal" class="modal fade" role="dialog">
@@ -70,8 +70,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="bower_components/knockout/dist/knockout.js"></script>
-	<script src="app/app.js"></script>
 	<script src="app/toggle.js"></script>
+	<script src="app/app.js"></script>
 	<script src="app/weather.js"></script>
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCG8QC0L6_wgk7G1EEnFwwiJy26TYY2cRU&v=3&callback=initMap"

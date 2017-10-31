@@ -11,6 +11,7 @@ var locations=[
   category:['Restaurants','All']
 }];
 
+var width=document.documentElement.clientWidth;
 var markers=[];
 var map;
 var detailsInfoWindow;
@@ -53,6 +54,9 @@ function initMap(){
   function getPlacesDetails(marker,infowindow) {
       var service = new google.maps.places.PlacesService(map);
       // console.log(marker.id);
+      if(width<550){
+        closeNav();
+      }
       service.getDetails({
         placeId: marker.id
       }, function(place, status) {
@@ -110,16 +114,19 @@ function initMap(){
 
   function updateMarkers(list){
     var i,j;
+    var bounds = new google.maps.LatLngBounds();
     for(var i=0; i<locations.length;i++){
       for(var j=0; j<list.length; j++){
         if(locations[i].name!=list[j]){
           markers[i].setVisible(false);
         }else{
           markers[i].setVisible(true);
+          bounds.extend(markers[i].position);
           break;
         }
       }
     }
+    map.fitBounds(bounds);
     return;
   }
 
@@ -158,7 +165,7 @@ function initMap(){
       self.categs.push(c);
     });
 
-    self.getDetails=function(name){
+    self.selectMarker=function(name){
       var m= new google.maps.Marker({});
       for(var i=0;i<markers.length;i++){
         if(name==markers[i].title){
@@ -166,8 +173,10 @@ function initMap(){
           break;
         }
       }
-      getPlacesDetails(m, detailsInfoWindow);
+      // getPlacesDetails(m, detailsInfoWindow);
       changeMarkerColor(m);
+      map.setCenter(m.position);
+      detailsInfoWindow.close();
       return;
     }
 

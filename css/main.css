@@ -58,3 +58,11 @@ i{
 	float: right;
 	margin: 10px 40px 10px 10px;
 }
+
+@media screen and (max-width: 550px){
+	#wthr-btn{
+		display: none;
+		font-size: smaller;
+		margin-top: 15px;
+	}
+}
