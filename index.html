@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 	<title>Neighborhood Map</title>
 
 	<!-- links -->
@@ -35,6 +35,9 @@
 				<ul data-bind="foreach: places">
 					<li data-bind="text: $data, click: $root.selectMarker"></li>
 				</ul>
+				<button type="button" class="btn btn-primary" data-bind="click: $root.getTipsObject" data-toggle="modal" data-target="#exampleModalLong">
+  					Get Tips
+				</button>
 			</div>
 		</div>
 		<div class="content" id="content">
@@ -44,7 +47,7 @@
 				<i class="fa fa-bars" style="font-size:xx-large" onclick="openNav()" aria-hidden="true"></i>
 
 				<!-- Trigger the weather modal with a button -->
-				<button type="button" id="wthr-btn" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#weatherModal">Get Current Weather</button>
+				<button type="button"  data-bind="click: $root.getWeather" id="wthr-btn" class="weather-button btn btn-info btn-lg" data-toggle="modal" data-target="#weatherModal">Get Current Weather</button>
 
 				<!-- weather Modal -->
 				<div id="weatherModal" class="modal fade" role="dialog">
@@ -56,8 +59,14 @@
 				      		<h4 class="modal-title">Current Weather</h4>
 				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 				    	</div>
-				    	<div class="modal-body">
-				        	
+				    	<div class="modal-body" data-bind="with: weatherCurrent">
+				        	<p>City: <span data-bind="text: place"></span></p>
+							<p>Temp: <span data-bind="text: temperature"></span>°C</p>
+							<p>Min Temp: <span data-bind="text: min_temp"></span>°C</p>
+							<p>Max Temp: <span data-bind="text: max_temp"></span>°C</p>
+							<p>Humidity: <span data-bind="text: humidity"></span>%</p>
+							<p>Cloudiness: <span data-bind="text: clouds"></span>%</p>
+							<!-- <p data-bind=""></p> -->
 				        </div>
 				        <div class="modal-footer">
 				        <p>Data obtained from <a href="https://openweathermap.org/">Open Weather Maps</a></p>
@@ -66,6 +75,29 @@
 				    </div>
 
 				  </div>
+				</div>
+				<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  					<div class="modal-dialog" role="document">
+    					<div class="modal-content">
+      						<div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          						<span aria-hidden="true">&times;</span>
+        						</button>
+      						</div>
+	      					<div class="modal-body">
+	        					<div data-bind="foreach: array">
+	        						<div data-bind="with: $data">
+	        							<div data-bind="text: name"></div>
+	        								<p data-bind="text: review"></p>
+	        						</div>	
+	        					</div>
+	      					</div>
+      						<div class="modal-footer">
+        						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      						</div>
+    					</div>
+  					</div>
 				</div>
 			</div>
 			<div id="map"></div>
@@ -77,11 +109,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="bower_components/knockout/dist/knockout.js"></script>
+	<script src="app/locations.js"></script>
 	<script src="app/toggle.js"></script>
-	<script src="app/app.js"></script>
 	<script src="app/weather.js"></script>
+	<script src="app/app.js"></script>
+	
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCG8QC0L6_wgk7G1EEnFwwiJy26TYY2cRU&v=3&callback=initMap&oneerror=googleMapsError"
+		src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCG8QC0L6_wgk7G1EEnFwwiJy26TYY2cRU&v=3&callback=initMap&onerror=googleMapsError"
 	></script>
 </body>
 </html>

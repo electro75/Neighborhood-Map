@@ -1,51 +1,3 @@
-//chosen locations
-var locations=[
-{
-	name: 'Dcrepes Cafe',
-	position: {lat: 19.226448, lng: 72.970598},
-	place_id: 'ChIJLbkoFV655zsRDtq0jP6inTM',
-  category: ['Cafes','All']
-},{
-	name: 'Whatta Waffle!',
-	position: {lat: 19.258517, lng: 72.984844},
-	place_id: 'ChIJa4Rn-4y75zsRkq_i-j2XfGg',
-  category: ['Cafes','All']
-},{
-  name: 'Mad House',
-  position: {lat: 19.265667, lng: 72.970099},
-  place_id: 'ChIJjQ2p_Je75zsR5rOk07OEfi4',
-  category: ['Cafes','All']
-},{
-  name: 'The J',
-  position: {lat: 19.227216, lng: 72.973588},
-  place_id: 'ChIJMVdtGF655zsR2lXzlIiM9XE',
-  category: ['Cafes','All']
-},{
-  name: 'Cinepolis',
-  position: {lat: 19.208823, lng: 72.970930},
-  place_id: 'ChIJY7Ssij-55zsR37R9IKCUaKM',
-  category: ['Movie Theaters','All']
-},{
-  name: 'Cinema star',
-  position: {lat: 19.217179, lng: 72.981166},
-  place_id: 'ChIJpyNFi0W55zsRZUDw9WbeBFg',
-  category: ['Movie Theaters','All']
-},{
-  name: 'INOX',
-  position: {lat: 19.203169, lng: 72.964992},
-  place_id: 'ChIJs-9eHxS55zsRV4CkVxCtoyU',
-  category: ['Movie Theaters','All']
-},{
-  name: 'Hatrics Turf',
-  position: {lat: 19.239037,lng: 72.967199},
-  place_id: 'ChIJW8MVUdy75zsR-kKsYaWAydQ',
-  category: ['Football Turfs','All']
-},{
-  name: 'Young Guns',
-  position: {lat: 19.219653,lng: 72.956220},
-  place_id: 'ChIJObX3kHq55zsRBpBx3ZMEKPY',
-  category: ['Football Turfs','All']
-}];
 
 var width=document.documentElement.clientWidth; //viewport width.
 var markers=[]; //array of all the markers.
@@ -54,7 +6,7 @@ var detailsInfoWindow; //Infowindow to display the details of a particular marke
 var categories=['Cafes','Movie Theaters','Football Turfs','All']; //Categories of the Places chosen
 var selectedMarkers=[]; //Stores one marker ie, the active marker
 var selectedIcon, defaultIcon; //markers with differnt colors.
-
+var activeMarker='';
 //Initiation of Map
 function initMap(){
 	map=new google.maps.Map(document.getElementById('map'),{
@@ -136,6 +88,7 @@ function getPlacesDetails(marker,infowindow) {
       infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
         marker.setIcon(defaultIcon);
+        isShown=false;
       });
     }
   });
@@ -214,10 +167,11 @@ function mapViewModel(){
   categories.forEach(function(c){
     self.categs.push(c);
   });
-
+  this.weatherCurrent=ko.observable();
 //changes the color of the marker that is selected for the list view
   self.selectMarker=function(name){
     var m= new google.maps.Marker({});
+    activeMarker=name;
     for(var i=0;i<markers.length;i++){
       if(name==markers[i].title){
         m=markers[i];
@@ -225,6 +179,7 @@ function mapViewModel(){
       }
     }
     changeMarkerColor(m);
+    getPlacesDetails(m,detailsInfoWindow)
     map.setCenter(m.position);
     detailsInfoWindow.close();
     return;
@@ -241,7 +196,35 @@ function mapViewModel(){
     updateMarkers(newList);
     detailsInfoWindow.close();
     selectedMarkers[0].setIcon(defaultIcon);
+    activeMarker='';
   };
-}
 
+  self.getTipsObject=function(){
+    if (activeMarker==''){
+      console.log('no marker bro');
+    }else{
+      console.log('proceed');
+    }
+  }
+//gets the current weather of the area from open weather maps API   
+  self.getWeather=function(){
+      getWeatherJSON('http://api.openweathermap.org/data/2.5/weather?id=1254661&appid=463212772e7b1d4c0fadb10da3b0272b')
+      .then(function(response){
+    //organisation of the data, if the data is successfully retrieved from the API
+        console.log(response);
+        self.weatherCurrent({
+          place: response.name+", "+response.sys.country,
+          temperature: Math.round(response.main.temp-273.15),
+          min_temp: Math.round(response.main.temp_min-273.15),
+          max_temp: Math.round(response.main.temp_max-273.15),
+          humidity: response.main.humidity,
+          // img_url: "http://openweathermap.org/img/w/"+response.weather[0].icon+".png",
+          clouds: response.clouds.all
+        });
+      }).catch(function(error){ //Error handling in case of an error.
+          $('.modal-body').append("<h4>Unable to fetch data, please try again later.</h4>");
+          console.log(error);
+      });
+  }
+}
 ko.applyBindings(new mapViewModel());
