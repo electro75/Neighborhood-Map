@@ -207,7 +207,7 @@ function mapViewModel(){
   };
 
   self.getTipsObject=function(){
-    if (activeMarker==''){
+    if (activeMarker===''){
       alert('please select a marker First!');
       activeMarker='No marker chosen.';
       self.markerActive(activeMarker);
@@ -222,7 +222,7 @@ function mapViewModel(){
         }
       }
       getfourSquareJSON(fs_venueID).then(function(response){
-        data=response.response.venue.tips
+        data=response.response.venue.tips;
         for(var i=0; i<3; i++){
           var name= data.groups[0].items[i].user.firstName +" "+ data.groups[0].items[i].user.lastName;
           self.tipsArray.push({
@@ -237,7 +237,7 @@ function mapViewModel(){
       console.log(error);
     }); 
   }
-}
+};
 //gets the current weather of the area from open weather maps API   
   self.getWeather=function(){
       getWeatherJSON('http://api.openweathermap.org/data/2.5/weather?id=1254661&appid=463212772e7b1d4c0fadb10da3b0272b')
@@ -257,6 +257,6 @@ function mapViewModel(){
           $('.modal-body').append("<h3>Unable to fetch data, please refresh the page and try again later.</h3>");
           console.log(error);
       });
-  }
+  };
 }
 ko.applyBindings(new mapViewModel());
