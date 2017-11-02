@@ -54,7 +54,10 @@ i {						/*General styling for the icons*/
 	float: right;
 	margin: 10px 40px 10px 10px;
 }
-
+.card {
+	overflow: scroll;
+	height: 350px;
+}
 @media screen and (max-width: 550px) {
 	#wthr-btn {
 		display: none;

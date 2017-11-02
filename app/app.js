@@ -7,6 +7,7 @@ var categories=['Restaurants','Movie Theaters','Shopping','All']; //Categories o
 var selectedMarkers=[]; //Stores one marker ie, the active marker
 var selectedIcon, defaultIcon; //markers with differnt colors.
 var activeMarker='';
+var shown=false;
 //Initiation of Map
 function initMap(){
 	map=new google.maps.Map(document.getElementById('map'),{
@@ -42,7 +43,7 @@ function makeMarker(i){
     getPlacesDetails(this, detailsInfoWindow);
     changeMarkerColor(this);
     activeMarker=this.title;
-    console.log(activeMarker);
+    shown=true;
   });
   return marker;
 }
@@ -171,6 +172,7 @@ function mapViewModel(){
   this.weatherCurrent=ko.observable();
   this.markerActive=ko.observable('');
   this.tipsArray=ko.observableArray();
+  this.isShown=ko.observable(shown);
 
 //changes the color of the marker that is selected for the list view
   self.selectMarker=function(name){
@@ -183,6 +185,8 @@ function mapViewModel(){
       }
     }
     self.markerActive(name);
+    self.isShown(true);
+    self.getTipsObject();
     changeMarkerColor(m);
     getPlacesDetails(m,detailsInfoWindow);
     map.setCenter(m.position);
@@ -204,15 +208,10 @@ function mapViewModel(){
     selectedMarkers[0].setIcon(defaultIcon);
   }
     activeMarker='';
+    self.isShown(false);
   };
 
   self.getTipsObject=function(){
-    if (activeMarker===''){
-      alert('please select a marker First!');
-      activeMarker='No marker chosen.';
-      self.markerActive(activeMarker);
-      self.tipsArray.removeAll();
-    }else{
       self.markerActive(activeMarker);
       var fs_venueID="";
       self.tipsArray.removeAll();
@@ -233,11 +232,10 @@ function mapViewModel(){
       return;
     })
     .catch(function(error){
-       $('.modal-body').append("<h3>Unable to fetch data, please refresh the page and try again later.</h3>");
+      alert('Google Error! Please try again later.');
       console.log(error);
     }); 
-  }
-};
+  };
 //gets the current weather of the area from open weather maps API   
   self.getWeather=function(){
       getWeatherJSON('http://api.openweathermap.org/data/2.5/weather?id=1254661&appid=463212772e7b1d4c0fadb10da3b0272b')
