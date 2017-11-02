@@ -80,13 +80,13 @@
   					<div class="modal-dialog" role="document">
     					<div class="modal-content">
       						<div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+						        <h5 class="modal-title" id="exampleModalLongTitle" data-bind="text: markerActive" >Modal title</h5>
         						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           						<span aria-hidden="true">&times;</span>
         						</button>
       						</div>
 	      					<div class="modal-body">
-	        					<div data-bind="foreach: array">
+	        					<div data-bind="foreach: tipsArray">
 	        						<div data-bind="with: $data">
 	        							<div data-bind="text: name"></div>
 	        								<p data-bind="text: review"></p>
@@ -94,6 +94,7 @@
 	        					</div>
 	      					</div>
       						<div class="modal-footer">
+      							 <p>Data obtained from <a href="https://foursquare.com/">Foursquare API</a></p>
         						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       						</div>
     					</div>
@@ -109,6 +110,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="bower_components/knockout/dist/knockout.js"></script>
+	<script src="app/foursquare.js"></script>
 	<script src="app/locations.js"></script>
 	<script src="app/toggle.js"></script>
 	<script src="app/weather.js"></script>

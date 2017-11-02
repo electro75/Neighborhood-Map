@@ -1,4 +1,4 @@
-
+//this file fetches data from open weather maps API.
 	function getWeatherData(url){
 		return fetch(url,{
 			method: 'get'

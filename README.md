@@ -22,11 +22,12 @@ The app can be run by cloning [this repository](https://github.com/electro75/Nei
 * Contains all the details of the chosen locations in the for of a `locations[]` which is an array of objects.
 
 ### wether.js
-* Obtains the weather data from [Open Weather Maps API](https://openweathermap.org/) and uses jQuery to add the recived data to a modal.
+* Obtains the weather data from [Open Weather Maps API](https://openweathermap.org/) and updates the modal in the view.
 
 ### toggle.js
 * Handles the toggling of the side-panel and makes sure it runs smoothly for all viewports.
 
-
+### foursquare.js
+* Obtains the review data form [Foursqueare API](https://https://foursquare.com/) and updates the modal in the view
 
 ## Thank You!

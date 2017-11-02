@@ -3,7 +3,7 @@ var width=document.documentElement.clientWidth; //viewport width.
 var markers=[]; //array of all the markers.
 var map; //The Map
 var detailsInfoWindow; //Infowindow to display the details of a particular marker
-var categories=['Cafes','Movie Theaters','Football Turfs','All']; //Categories of the Places chosen
+var categories=['Restaurants','Movie Theaters','Shopping','All']; //Categories of the Places chosen
 var selectedMarkers=[]; //Stores one marker ie, the active marker
 var selectedIcon, defaultIcon; //markers with differnt colors.
 var activeMarker='';
@@ -41,6 +41,8 @@ function makeMarker(i){
   marker.addListener('click',function(){
     getPlacesDetails(this, detailsInfoWindow);
     changeMarkerColor(this);
+    activeMarker=this.title;
+    console.log(activeMarker);
   });
   return marker;
 }
@@ -88,7 +90,6 @@ function getPlacesDetails(marker,infowindow) {
       infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
         marker.setIcon(defaultIcon);
-        isShown=false;
       });
     }
   });
@@ -168,6 +169,9 @@ function mapViewModel(){
     self.categs.push(c);
   });
   this.weatherCurrent=ko.observable();
+  this.markerActive=ko.observable('');
+  this.tipsArray=ko.observableArray();
+
 //changes the color of the marker that is selected for the list view
   self.selectMarker=function(name){
     var m= new google.maps.Marker({});
@@ -178,8 +182,9 @@ function mapViewModel(){
         break;
       }
     }
+    self.markerActive(name);
     changeMarkerColor(m);
-    getPlacesDetails(m,detailsInfoWindow)
+    getPlacesDetails(m,detailsInfoWindow);
     map.setCenter(m.position);
     detailsInfoWindow.close();
     return;
@@ -195,17 +200,44 @@ function mapViewModel(){
     self.currentListName(categoryName);
     updateMarkers(newList);
     detailsInfoWindow.close();
+    if(selectedMarkers[0]){
     selectedMarkers[0].setIcon(defaultIcon);
+  }
     activeMarker='';
   };
 
   self.getTipsObject=function(){
     if (activeMarker==''){
-      console.log('no marker bro');
+      alert('please select a marker First!');
+      activeMarker='No marker chosen.';
+      self.markerActive(activeMarker);
+      self.tipsArray.removeAll();
     }else{
-      console.log('proceed');
-    }
+      self.markerActive(activeMarker);
+      var fs_venueID="";
+      self.tipsArray.removeAll();
+      for(var i=0;i<locations.length;i++){
+        if(locations[i].name==self.markerActive()){
+          fs_venueID=locations[i].fs_id;
+        }
+      }
+      getfourSquareJSON(fs_venueID).then(function(response){
+        data=response.response.venue.tips
+        for(var i=0; i<3; i++){
+          var name= data.groups[0].items[i].user.firstName +" "+ data.groups[0].items[i].user.lastName;
+          self.tipsArray.push({
+            name: name,
+            review: data.groups[0].items[i].text
+          });
+        }
+      return;
+    })
+    .catch(function(error){
+       $('.modal-body').append("<h3>Unable to fetch data, please refresh the page and try again later.</h3>");
+      console.log(error);
+    }); 
   }
+}
 //gets the current weather of the area from open weather maps API   
   self.getWeather=function(){
       getWeatherJSON('http://api.openweathermap.org/data/2.5/weather?id=1254661&appid=463212772e7b1d4c0fadb10da3b0272b')
@@ -222,7 +254,7 @@ function mapViewModel(){
           clouds: response.clouds.all
         });
       }).catch(function(error){ //Error handling in case of an error.
-          $('.modal-body').append("<h4>Unable to fetch data, please try again later.</h4>");
+          $('.modal-body').append("<h3>Unable to fetch data, please refresh the page and try again later.</h3>");
           console.log(error);
       });
   }

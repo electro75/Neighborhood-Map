@@ -1,4 +1,6 @@
-
+body {
+	background: #222930;
+}
 * {
 	font-family: 'Bree Serif', serif;
 }
@@ -10,6 +12,7 @@
 	width: 100%;
 	display: flex;
 	background: #222930;
+	/*position: fixed;*/
 }
 .side-panel{
 	width: 350px;
