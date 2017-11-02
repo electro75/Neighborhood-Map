@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project was developed as the part of Udacity's Front-End Nanodegree. It is basically a map depicting the neighborhood that I live in and highlights some of my favourite spots.
+This project was developed as the part of Udacity's Front-End Nanodegree. It is basically a map depicting the neighborhood that I live in and highlights some of my favourite spots. [Neighborhood Map](https://electro75.github.io/Neighborhood-Map/)
 
 ## Instructions 
 The app can be run by cloning [this repository](https://github.com/electro75/Neighborhood-Map) and then running index.html .
