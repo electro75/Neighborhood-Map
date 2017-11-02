@@ -25,7 +25,7 @@ function initMap(){
 
 //handles google map error and gives a message to the user.
 function googleMapsError(){
-  document.getElementById('map').setContent('<h3>Unable to load Map. Please Try again later</h3>');
+ $('#map').append('<h3>Unable to load Map. Please Try again later</h3>');
   return;
 }
 //A function that initilises properties of the marker of the given location.
