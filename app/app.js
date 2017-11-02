@@ -28,7 +28,7 @@ function initMap(){
 
 //handles google map error and gives a message to the user.
 function googleMapsError(){
-  alert('Google Maps Error! Please try again later.')
+  alert('Google Maps Error! Please try again later.');
   return;
 }
 //A function that initilises properties of the marker of the given location.
