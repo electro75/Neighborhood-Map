@@ -8,6 +8,8 @@ var selectedMarkers=[]; //Stores one marker ie, the active marker
 var selectedIcon, defaultIcon; //markers with differnt colors.
 var activeMarker='';
 var shown=false;
+var mvm= new mapViewModel();
+
 //Initiation of Map
 function initMap(){
 	map=new google.maps.Map(document.getElementById('map'),{
@@ -26,7 +28,7 @@ function initMap(){
 
 //handles google map error and gives a message to the user.
 function googleMapsError(){
- $('#map').append('<h3>Unable to load Map. Please Try again later</h3>');
+  alert('Google Maps Error! Please try again later.')
   return;
 }
 //A function that initilises properties of the marker of the given location.
@@ -43,7 +45,8 @@ function makeMarker(i){
     getPlacesDetails(this, detailsInfoWindow);
     changeMarkerColor(this);
     activeMarker=this.title;
-    shown=true;
+    mvm.isShown(true);
+    mvm.getTipsObject();
   });
   return marker;
 }
@@ -91,6 +94,7 @@ function getPlacesDetails(marker,infowindow) {
       infowindow.addListener('closeclick', function() {
         infowindow.marker = null;
         marker.setIcon(defaultIcon);
+        mvm.isShown(false);
       });
     }
   });
@@ -232,7 +236,7 @@ function mapViewModel(){
       return;
     })
     .catch(function(error){
-      alert('Google Error! Please try again later.');
+      $('.card').append("<h3>Unable to fetch data, please refresh the page and try again later.</h3>");
       console.log(error);
     }); 
   };
@@ -257,4 +261,4 @@ function mapViewModel(){
       });
   };
 }
-ko.applyBindings(new mapViewModel());
+ko.applyBindings(mvm);
