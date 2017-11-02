@@ -35,9 +35,7 @@
 				<ul data-bind="foreach: places">
 					<li data-bind="text: $data, click: $root.selectMarker"></li>
 				</ul>
-				<!-- <button type="button" class="btn btn-primary" data-bind="click: $root.getTipsObject" data-toggle="modal" data-target="#exampleModalLong">
-  					Get Tips
-				</button> -->
+				<!-- card that displays the reviews from Forusquare API -->
 				<div class="card" style="width: 20rem;" data-bind="visible: isShown">
   					<span class="card-header" data-bind="text: markerActive"></span>
   					<p>Reviews from <a href="https://foursquare.com/">Fouraquare API</a></p>
@@ -86,30 +84,6 @@
 
 				  </div>
 				</div>
-				<!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  					<div class="modal-dialog" role="document">
-    					<div class="modal-content">
-      						<div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLongTitle" data-bind="text: markerActive" >Modal title</h5>
-        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          						<span aria-hidden="true">&times;</span>
-        						</button>
-      						</div>
-	      					<div class="modal-body">
-	        					<div data-bind="foreach: tipsArray">
-	        						<div data-bind="with: $data">
-	        							<div data-bind="text: name"></div>
-	        								<p data-bind="text: review"></p>
-	        						</div>	
-	        					</div>
-	      					</div>
-      						<div class="modal-footer">
-      							 <p>Data obtained from <a href="https://foursquare.com/">Foursquare API</a></p>
-        						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      						</div>
-    					</div>
-  					</div>
-				</div> -->
 			</div>
 			<div id="map"></div>
 		</div>
